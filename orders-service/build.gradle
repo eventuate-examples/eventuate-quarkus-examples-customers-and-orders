@@ -1,0 +1,53 @@
+plugins {
+    id "io.quarkus" version "${quarkusVersion}"
+    id 'org.kordamp.gradle.jandex' version '0.6.0'
+}
+
+apply plugin: 'docker-compose'
+
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
+
+//    if ("EventuatePolling".equals(System.getenv("SPRING_PROFILES_ACTIVE")))
+//        useComposeFiles = ['docker-compose-integration-tests-eventuate-local-postgres-polling.yml']
+//    else if ("PostgresWal".equals(System.getenv("SPRING_PROFILES_ACTIVE")))
+//        useComposeFiles = ['docker-compose-integration-tests-eventuate-local-postgres-wal.yml']
+//    else
+        useComposeFiles = ['docker-compose-integration-tests-eventuate-local-mysql.yml']
+}
+
+dependencies {
+    compile project(":orders-common")
+
+    compile "io.eventuate.local.java:eventuate-client-java-quarkus:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
+
+    compile group: 'org.springframework', name: 'spring-web', version: '5.3.3'
+
+
+    compile 'io.quarkus:quarkus-core'
+    compile 'io.quarkus.arc:arc'
+    compile 'io.quarkus:quarkus-arc-deployment'
+    compile 'io.quarkus:quarkus-smallrye-health'
+    compile 'io.quarkus:quarkus-smallrye-openapi'
+    compile 'io.quarkus:quarkus-resteasy-jackson'
+
+    compile 'io.quarkus:quarkus-jdbc-mysql'
+    compile 'io.quarkus:quarkus-jdbc-mssql'
+    compile 'io.quarkus:quarkus-jdbc-postgresql'
+
+    testCompile project(":customers-common")
+
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    testCompile 'io.quarkus:quarkus-junit5'
+
+    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
