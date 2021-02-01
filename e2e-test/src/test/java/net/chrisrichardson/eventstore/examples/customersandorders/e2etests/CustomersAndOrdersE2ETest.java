@@ -10,7 +10,6 @@ import net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryc
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderView;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

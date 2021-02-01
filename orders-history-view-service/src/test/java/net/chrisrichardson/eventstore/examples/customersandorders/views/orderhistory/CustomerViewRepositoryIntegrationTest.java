@@ -1,6 +1,6 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhistory;
 
-import io.micronaut.test.annotation.MicronautTest;
+import io.quarkus.test.junit.QuarkusTest;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.CustomerView;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.backend.CustomerViewRepository;
@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@MicronautTest
+@QuarkusTest
 public class CustomerViewRepositoryIntegrationTest {
 
   @Inject
-  private CustomerViewRepository customerViewRepository;
+  CustomerViewRepository customerViewRepository;
 
   @Test
   public void shouldCreateAndFindCustomer() {

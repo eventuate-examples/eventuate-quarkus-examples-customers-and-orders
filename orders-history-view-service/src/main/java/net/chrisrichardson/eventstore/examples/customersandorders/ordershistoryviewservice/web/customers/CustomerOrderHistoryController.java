@@ -1,26 +1,29 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.web.customers;
 
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.CustomerView;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.backend.CustomerViewRepository;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-@Controller
+@Path(value = "/customers")
 public class CustomerOrderHistoryController {
 
   @Inject
-  private CustomerViewRepository customerViewRepository;
+  CustomerViewRepository customerViewRepository;
 
-  @Get("/customers/{customerId}")
-  public HttpResponse<CustomerView> getCustomer(String customerId) {
+  @Path("/{customerId}")
+  @GET
+  public CustomerView getCustomer(@PathParam("customerId") String customerId) {
     CustomerView customer = customerViewRepository.findOne(customerId);
     System.out.println("Found customer=" + customer + " for " + customerId);
     if (customer == null)
-      return HttpResponse.notFound();
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
     else
-      return HttpResponse.ok(customer);
+      return customer;
   }
 }

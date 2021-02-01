@@ -12,10 +12,10 @@ import javax.inject.Singleton;
 public class OrderHistoryViewService {
 
   @Inject
-  private CustomerViewRepository customerViewRepository;
+  CustomerViewRepository customerViewRepository;
 
   @Inject
-  private OrderViewRepository orderViewRepository;
+  OrderViewRepository orderViewRepository;
 
   public void createCustomer(String customerId, String customerName, Money creditLimit) {
     customerViewRepository.addCustomer(customerId, customerName, creditLimit);

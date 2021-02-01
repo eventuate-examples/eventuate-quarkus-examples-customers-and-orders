@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-//@QuarkusTest
+@QuarkusTest
 public class CustomerPersistenceTest {
 
-//  @Inject
+  @Inject
   AggregateRepository<Customer, CustomerCommand> aggregateRepository;
 
-//  @Test
+  @Test
   public void shouldCreateAndUpdateCustomer() {
     EntityWithIdAndVersion<Customer> cwm = aggregateRepository.save(new CreateCustomerCommand("Fred", new Money(1234)));
 

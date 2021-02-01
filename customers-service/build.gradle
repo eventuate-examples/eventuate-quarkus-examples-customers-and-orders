@@ -21,8 +21,13 @@ dependencies {
     compile 'io.quarkus:quarkus-jdbc-mssql'
     compile 'io.quarkus:quarkus-jdbc-postgresql'
 
+    testCompile 'com.pholser:junit-quickcheck-core:0.7'
+    testCompile 'com.pholser:junit-quickcheck-generators:0.7'
+    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
+
     testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
     testCompile 'io.quarkus:quarkus-junit5'
+    testCompile 'org.mockito:mockito-all:1.10.19'
 
     implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }

@@ -1,26 +1,30 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.web.orders;
 
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderView;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.backend.OrderViewRepository;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-@Controller
+@Path(value = "/orders")
 public class OrderViewController {
 
   @Inject
-  private OrderViewRepository orderViewRepository;
+  OrderViewRepository orderViewRepository;
 
-  @Get("/orders/{orderId}")
-  public HttpResponse<OrderView> getOrder(String orderId) {
+  @Path("/{orderId}")
+  @GET
+  public OrderView getOrder(@PathParam("orderId") String orderId) {
 
     OrderView ov = orderViewRepository.findOne(orderId);
+
     if (ov == null) {
-      return HttpResponse.notFound();
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
     } else {
-      return HttpResponse.ok(ov);
+      return ov;
     }
   }
 }

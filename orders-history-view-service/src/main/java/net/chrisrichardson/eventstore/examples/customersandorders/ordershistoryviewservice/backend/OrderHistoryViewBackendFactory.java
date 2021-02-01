@@ -1,10 +1,8 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.backend;
 
-import io.micronaut.context.annotation.Factory;
-
 import javax.inject.Singleton;
 
-@Factory
+@Singleton
 public class OrderHistoryViewBackendFactory {
 
   @Singleton

@@ -1,12 +1,11 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordershistoryviewservice.backend;
 
-import com.mongodb.MongoClient;
-import io.micronaut.context.annotation.Factory;
+import com.mongodb.client.MongoClient;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.inject.Singleton;
 
-@Factory
+@Singleton
 public class OrderHistoryViewMongoFactory {
   @Singleton
   public MongoTemplate mongoTemplate(MongoClient mongoClient) {

@@ -1,6 +1,6 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.views.orderhistory;
 
-import io.micronaut.test.annotation.MicronautTest;
+import io.quarkus.test.junit.QuarkusTest;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderState;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.CustomerView;
@@ -13,20 +13,20 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@MicronautTest
+@QuarkusTest
 public class OrderHistoryViewServiceTest {
 
   @Inject
-  private OrderHistoryViewService orderHistoryViewService;
+  OrderHistoryViewService orderHistoryViewService;
 
   @Inject
-  private CustomerViewRepository customerViewRepository;
+  CustomerViewRepository customerViewRepository;
 
   @Inject
-  private OrderViewRepository orderViewRepository;
+  OrderViewRepository orderViewRepository;
 
   @Test
   public void shouldCreateCustomerAndOrdersEtc() {
@@ -67,6 +67,4 @@ public class OrderHistoryViewServiceTest {
     assertEquals(orderTotal2, orderView2.getOrderTotal());
     assertEquals(OrderState.REJECTED, orderView2.getState());
   }
-
-
 }

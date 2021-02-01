@@ -16,7 +16,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 public class OrderViewRepository {
 
   @Inject
-  private MongoTemplate mongoTemplate;
+  MongoTemplate mongoTemplate;
 
   public OrderView findOne(String orderId) {
     return mongoTemplate.findOne(new Query(where("id").is(orderId)), OrderView.class);
