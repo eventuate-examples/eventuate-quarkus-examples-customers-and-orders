@@ -25,9 +25,6 @@ dependencies {
     compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
     compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
 
-    compile group: 'org.springframework', name: 'spring-web', version: '5.3.3'
-
-
     compile 'io.quarkus:quarkus-core'
     compile 'io.quarkus.arc:arc'
     compile 'io.quarkus:quarkus-arc-deployment'
@@ -39,7 +36,10 @@ dependencies {
     compile 'io.quarkus:quarkus-jdbc-mssql'
     compile 'io.quarkus:quarkus-jdbc-postgresql'
 
-    testCompile project(":customers-common")
+    compile 'io.quarkus:quarkus-rest-client'
+    compile 'io.quarkus:quarkus-resteasy-jackson'
+
+    compile project(":customers-common")
 
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"

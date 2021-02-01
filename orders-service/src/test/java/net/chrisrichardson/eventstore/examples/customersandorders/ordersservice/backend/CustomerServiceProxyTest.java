@@ -1,10 +1,12 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend;
 
+import net.chrisrichardson.eventstore.examples.customersandorders.customerscommon.CreateCustomerResponse;
+import net.chrisrichardson.eventstore.examples.customersandorders.customerscommon.GetCustomerResponse;
+import net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.web.CustomerRestClientService;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+
+import javax.ws.rs.WebApplicationException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -12,30 +14,28 @@ import static org.mockito.Mockito.when;
 
 public class CustomerServiceProxyTest {
 
-  public static final String CUSTOMER_SERVICE_URL = "http://mycustomerservice/customers/{customerId}";
   private static final String CUSTOMER_ID = "customer_id";
-  private RestTemplate restTemplate;
+  private CustomerRestClientService customerRestClientService;
   private CustomerServiceProxy proxy;
 
   @Before
   public void setUp() {
-    restTemplate = mock(RestTemplate.class);
-    proxy = new CustomerServiceProxy(restTemplate);
-    proxy.setCustomerServiceUrl(CUSTOMER_SERVICE_URL);
+    customerRestClientService = mock(CustomerRestClientService.class);
+    proxy = new CustomerServiceProxy(customerRestClientService);
   }
 
   @Test
   public void shouldFindCustomer() {
-    when(restTemplate.getForEntity(CUSTOMER_SERVICE_URL, Customer.class, CUSTOMER_ID))
-            .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+    when(customerRestClientService.getCustomer(CUSTOMER_ID)).thenReturn(new GetCustomerResponse(CUSTOMER_ID, null, null));
     proxy.verifyCustomerCustomerId(CUSTOMER_ID);
-    verify(restTemplate).getForEntity(CUSTOMER_SERVICE_URL, Customer.class, CUSTOMER_ID);
+    verify(customerRestClientService).getCustomer(CUSTOMER_ID);
   }
 
   @Test(expected=CustomerNotFoundException.class)
   public void shouldNotFindCustomer() {
-    when(restTemplate.getForEntity(CUSTOMER_SERVICE_URL, Customer.class, CUSTOMER_ID))
-            .thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    when(customerRestClientService.getCustomer(CUSTOMER_ID))
+            .thenThrow(new WebApplicationException(404));
+
     proxy.verifyCustomerCustomerId(CUSTOMER_ID);
   }
 }
