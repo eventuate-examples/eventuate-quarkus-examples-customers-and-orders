@@ -19,6 +19,7 @@ dependencies {
     compile "io.eventuate.local.java:eventuate-local-java-quarkus-events:$eventuateLocalQuarkusVersion"
 
     compile "io.quarkus:quarkus-mongodb-client"
+    compile 'io.quarkus:quarkus-mongodb-panache'
 
     compile 'io.quarkus:quarkus-core'
     compile 'io.quarkus.arc:arc'

@@ -9,7 +9,6 @@ public class OrderInfo {
   private String orderId;
   private Money orderTotal;
 
-
   public OrderInfo() {
   }
 
@@ -19,19 +18,27 @@ public class OrderInfo {
     this.state = OrderState.CREATED;
   }
 
-  public void approve() {
-    state = OrderState.APPROVED;
+  public OrderState getState() {
+    return state;
   }
 
-  public void reject() {
-    state = OrderState.REJECTED;
+  public void setState(OrderState state) {
+    this.state = state;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
   }
 
   public Money getOrderTotal() {
     return orderTotal;
   }
 
-  public OrderState getState() {
-    return state;
+  public void setOrderTotal(Money orderTotal) {
+    this.orderTotal = orderTotal;
   }
 }

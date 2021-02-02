@@ -18,8 +18,7 @@ public class OrderViewController {
   @Path("/{orderId}")
   @GET
   public OrderView getOrder(@PathParam("orderId") String orderId) {
-
-    OrderView ov = orderViewRepository.findOne(orderId);
+    OrderView ov = orderViewRepository.findById(orderId);
 
     if (ov == null) {
       throw new WebApplicationException(Response.Status.NOT_FOUND);

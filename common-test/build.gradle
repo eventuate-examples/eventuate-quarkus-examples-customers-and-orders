@@ -7,4 +7,5 @@ dependencies {
 
     compile 'io.eventuate.util:eventuate-util-test:0.1.0.RELEASE'
 
+    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }

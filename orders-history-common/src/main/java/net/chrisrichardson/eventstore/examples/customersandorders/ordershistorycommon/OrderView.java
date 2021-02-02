@@ -1,19 +1,18 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon;
 
+import io.quarkus.mongodb.panache.MongoEntity;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderState;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.codecs.pojo.annotations.BsonId;
 
-@Document
+@MongoEntity(collection="Order")
 public class OrderView {
 
-  @Id
+  @BsonId
   private String id;
 
   private OrderState state;
   private Money orderTotal;
-
 
   public OrderView() {
   }
@@ -24,11 +23,27 @@ public class OrderView {
     this.state = OrderState.CREATED;
   }
 
-  public Money getOrderTotal() {
-    return orderTotal;
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public OrderState getState() {
     return state;
+  }
+
+  public void setState(OrderState state) {
+    this.state = state;
+  }
+
+  public Money getOrderTotal() {
+    return orderTotal;
+  }
+
+  public void setOrderTotal(Money orderTotal) {
+    this.orderTotal = orderTotal;
   }
 }

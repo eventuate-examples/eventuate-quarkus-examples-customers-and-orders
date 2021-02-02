@@ -19,8 +19,8 @@ public class CustomerOrderHistoryController {
   @Path("/{customerId}")
   @GET
   public CustomerView getCustomer(@PathParam("customerId") String customerId) {
-    CustomerView customer = customerViewRepository.findOne(customerId);
-    System.out.println("Found customer=" + customer + " for " + customerId);
+    CustomerView customer = customerViewRepository.findById(customerId);
+
     if (customer == null)
       throw new WebApplicationException(Response.Status.NOT_FOUND);
     else
