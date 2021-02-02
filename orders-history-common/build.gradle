@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":common")
+    compile 'io.quarkus:quarkus-mongodb-panache'
+
+    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
+}

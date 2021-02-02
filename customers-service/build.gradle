@@ -1,0 +1,37 @@
+plugins {
+    id "io.quarkus" version "${quarkusVersion}"
+    id 'org.kordamp.gradle.jandex' version '0.6.0'
+}
+
+dependencies {
+    compile project(":customers-common")
+
+    compile "io.eventuate.local.java:eventuate-client-java-quarkus:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
+
+    compile 'io.quarkus:quarkus-core'
+    compile 'io.quarkus.arc:arc'
+    compile 'io.quarkus:quarkus-arc-deployment'
+    compile 'io.quarkus:quarkus-smallrye-health'
+    compile 'io.quarkus:quarkus-smallrye-openapi'
+    compile 'io.quarkus:quarkus-resteasy-jackson'
+
+    compile 'io.quarkus:quarkus-jdbc-mysql'
+    compile 'io.quarkus:quarkus-jdbc-mssql'
+    compile 'io.quarkus:quarkus-jdbc-postgresql'
+
+    testCompile 'com.pholser:junit-quickcheck-core:0.7'
+    testCompile 'com.pholser:junit-quickcheck-generators:0.7'
+    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
+
+    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    testCompile 'io.quarkus:quarkus-junit5'
+    testCompile 'org.mockito:mockito-all:1.10.19'
+
+    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
