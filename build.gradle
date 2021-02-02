@@ -30,12 +30,6 @@ dockerCompose {
     environment.put "EVENTUATE_CDC_VERSION", eventuateCdcImageVersion
     environment.put "EVENTUATE_JAVA_BASE_IMAGE_VERSION", eventuateExamplesBaseImageVersion
 
-    mysqlbinlogOnly {
-        projectName = null
-        startedServices = [ 'mysql']
-        useComposeFiles = ["docker-compose-eventuate-local-mysql.yml"]
-    }
-
     mysqlbinlog {
         projectName = null
         useComposeFiles = ["docker-compose-eventuate-local-mysql.yml"]
@@ -44,13 +38,7 @@ dockerCompose {
     mysqlbinlogcdc {
         projectName = null
         useComposeFiles = ["docker-compose-eventuate-local-mysql.yml"]
-        startedServices = ["cdcservice"]
-    }
-
-    postgrespollingOnly {
-        projectName = null
-        startedServices = [ 'postgres']
-        useComposeFiles = ["docker-compose-eventuate-local-postgres-polling.yml"]
+        startedServices = ["cdc-service"]
     }
 
     postgrespolling {
@@ -61,13 +49,7 @@ dockerCompose {
     postgrespollingcdc {
         projectName = null
         useComposeFiles = ["docker-compose-eventuate-local-postgres-polling.yml"]
-        startedServices = ["cdcservice"]
-    }
-
-    postgreswalOnly {
-        projectName = null
-        startedServices = [ 'postgres']
-        useComposeFiles = ["docker-compose-eventuate-local-postgres-wal.yml"]
+        startedServices = ["cdc-service"]
     }
 
     postgreswal {
@@ -78,16 +60,6 @@ dockerCompose {
     postgreswalcdc {
         projectName = null
         useComposeFiles = ["docker-compose-eventuate-local-postgres-wal.yml"]
-        startedServices = ["cdcservice"]
+        startedServices = ["cdc-service"]
     }
 }
-
-
-mysqlbinlogComposeUp.dependsOn(mysqlbinlogComposeBuild)
-mysqlbinlogComposeUp.dependsOn(mysqlbinlogOnlyComposeUp)
-
-postgrespollingComposeUp.dependsOn(postgrespollingComposeBuild)
-postgrespollingComposeUp.dependsOn(postgrespollingOnlyComposeUp)
-
-postgreswalComposeUp.dependsOn(postgreswalComposeBuild)
-postgreswalComposeUp.dependsOn(postgreswalOnlyComposeUp)

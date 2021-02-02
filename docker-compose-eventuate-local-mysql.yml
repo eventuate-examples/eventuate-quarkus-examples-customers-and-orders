@@ -33,7 +33,7 @@ services:
       - MYSQL_USER=mysqluser
       - MYSQL_PASSWORD=mysqlpw
 
-  cdcservice:
+  cdc-service:
     image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:
       - "8099:8080"
@@ -64,7 +64,7 @@ services:
     ports:
       - "27017:27017"
 
-  customercommandside:
+  customers-service:
     build:
       context: ./customers-service/
       args:
@@ -82,7 +82,7 @@ services:
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:mysql://mysql/eventuate
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
-  orderhistoryqueryside:
+  orders-history-view-service:
     build:
       context: ./orders-history-view-service/
       args:
@@ -95,10 +95,10 @@ services:
       - kafka
       - zookeeper
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
+      QUARKUS_MONGODB_CONNECTION_STRING: mongodb://mongodb/customers_and_orders
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
-  ordercommandside:
+  orders-service:
     build:
       context: ./orders-service/
       args:
@@ -109,11 +109,12 @@ services:
       - mysql
       - kafka
       - zookeeper
-      - customercommandside
+      - customers-service
     environment:
-      CUSTOMER_SERVICE_URL: http://customercommandside:8080/customers/{customerId}
+      CUSTOMER_SERVICE_URL: http://customers-service:8080/customers/{customerId}
       EVENTUATEDATABASE: mysql
       QUARKUS_DATASOURCE_USERNAME: mysqluser
       QUARKUS_DATASOURCE_PASSWORD: mysqlpw
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:mysql://mysql/eventuate
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      CUSTOMER_API_MP_REST_URL: http://customers-service:8080

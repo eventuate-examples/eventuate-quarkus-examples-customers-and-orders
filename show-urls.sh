@@ -4,6 +4,6 @@
 
 echo The microservices are running
 echo You can visit these URLS
-echo http://${DOCKER_HOST_IP?}:8081/swagger-ui/index.html - Customer service
-echo http://${DOCKER_HOST_IP?}:8083/swagger-ui/index.html - Order Service
-echo http://${DOCKER_HOST_IP?}:8082/swagger-ui/index.html - Order History Service
+echo http://${DOCKER_HOST_IP?}:8081/swagger-ui - Customer service
+echo http://${DOCKER_HOST_IP?}:8083/swagger-ui - Order Service
+echo http://${DOCKER_HOST_IP?}:8082/swagger-ui - Order History Service

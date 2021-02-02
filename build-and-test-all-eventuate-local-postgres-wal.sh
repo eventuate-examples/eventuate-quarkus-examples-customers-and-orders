@@ -1,7 +1,5 @@
 #! /bin/bash
 
-. ./set-env-eventuate-local-postgres-wal.sh
-
 export database=postgres
 export mode=wal
 

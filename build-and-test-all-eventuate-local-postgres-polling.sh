@@ -1,7 +1,5 @@
 #! /bin/bash
 
-. ./set-env-eventuate-local-postgres-polling.sh
-
 export database=postgres
 export mode=polling
 
