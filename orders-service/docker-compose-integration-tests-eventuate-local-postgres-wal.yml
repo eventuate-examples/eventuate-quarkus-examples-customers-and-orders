@@ -1,6 +1,6 @@
 version: '3'
 services:
-  customercommandside:
+  customers-service:
     build:
       context: ../customers-service/
       args:
@@ -8,9 +8,8 @@ services:
     ports:
       - "8081:8080"
     environment:
-      DB_URL: jdbc:postgresql://$DOCKER_HOST_IP/eventuate
-      DB_USERNAME: eventuate
-      DB_PASSWORD: eventuate
-      DB_DRIVERCLASSNAME: org.postgresql.Driver
+      EVENTUATEDATABASE: postgresql
+      QUARKUS_DATASOURCE_USERNAME: eventuate
+      QUARKUS_DATASOURCE_PASSWORD: eventuate
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://$DOCKER_HOST_IP/eventuate
       EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: $DOCKER_HOST_IP:9092
-      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: $DOCKER_HOST_IP:2181

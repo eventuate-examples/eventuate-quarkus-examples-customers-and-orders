@@ -39,13 +39,13 @@ public abstract class AbstractCustomerAndOrdersIntegrationTest {
 
         String orderId = createOrder(customerId, orderTotal);
 
-        eventually(40, 500, TimeUnit.MILLISECONDS, () -> {
+        eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
                 OrderView o = getOrderView(orderId);
                 assertNotNull(o);
                 assertEquals(OrderState.APPROVED, o.getState());
         });
 
-        CustomerView customerView = eventuallyReturning(() -> {
+        CustomerView customerView = eventuallyReturning(120, 500, TimeUnit.MILLISECONDS, () -> {
           CustomerView cv = getCustomerView(customerId);
           assertNotNull(cv);
           OrderInfo orderInfo = cv.getOrders().get(orderId);
@@ -54,38 +54,42 @@ public abstract class AbstractCustomerAndOrdersIntegrationTest {
           return cv;
         });
 
-        assertEquals(creditLimit, customerView.getCreditLimit());
-        assertEquals(orderTotal, customerView.getOrders().get(orderId).getOrderTotal());
-
+        eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
+          assertEquals(creditLimit, customerView.getCreditLimit());
+          assertEquals(orderTotal, customerView.getOrders().get(orderId).getOrderTotal());
+        });
     }
 
     @Test
-    public void shouldCreateAndRejectOrder() {
+    public void shouldCreateAndRejectOrder() throws Exception {
 
-        String customerId = createCustomer(creditLimit);
+      String customerId = createCustomer(creditLimit);
 
-        Money orderTotal = creditLimit.add(new Money(1));
+      Thread.sleep(4000);
 
-        String orderId = createOrder(customerId, orderTotal);
+      Money orderTotal = creditLimit.add(new Money(1));
 
-        eventually(40, 500, TimeUnit.MILLISECONDS, () -> {
-          OrderView o = getOrderView(orderId);
-          assertNotNull(o);
-          assertEquals(OrderState.REJECTED, o.getState());
-        });
+      String orderId = createOrder(customerId, orderTotal);
 
-        CustomerView customerView = eventuallyReturning(() -> {
-          CustomerView cv = getCustomerView(customerId);
-          assertNotNull(cv);
-          OrderInfo orderInfo = cv.getOrders().get(orderId);
-          assertNotNull(orderInfo);
-          assertEquals(OrderState.REJECTED, orderInfo.getState());
-          return cv;
-        });
+      eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
+        OrderView o = getOrderView(orderId);
+        assertNotNull(o);
+        assertEquals(OrderState.REJECTED, o.getState());
+      });
 
+      CustomerView customerView = eventuallyReturning(120, 500, TimeUnit.MILLISECONDS, () -> {
+        CustomerView cv = getCustomerView(customerId);
+        assertNotNull(cv);
+        OrderInfo orderInfo = cv.getOrders().get(orderId);
+        assertNotNull(orderInfo);
+        assertEquals(OrderState.REJECTED, orderInfo.getState());
+        return cv;
+      });
+
+      eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
         assertEquals(creditLimit, customerView.getCreditLimit());
         assertEquals(orderTotal, customerView.getOrders().get(orderId).getOrderTotal());
-
+      });
     }
 
     @Test

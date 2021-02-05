@@ -41,14 +41,14 @@ dockerCompose {
         startedServices = ["cdc-service"]
     }
 
-    postgrespolling {
+    mssqlpolling {
         projectName = null
-        useComposeFiles = ["docker-compose-eventuate-local-postgres-polling.yml"]
+        useComposeFiles = ["docker-compose-eventuate-local-mssql-polling.yml"]
     }
 
-    postgrespollingcdc {
+    mssqlpollingcdc {
         projectName = null
-        useComposeFiles = ["docker-compose-eventuate-local-postgres-polling.yml"]
+        useComposeFiles = ["docker-compose-eventuate-local-mssql-polling.yml"]
         startedServices = ["cdc-service"]
     }
 
