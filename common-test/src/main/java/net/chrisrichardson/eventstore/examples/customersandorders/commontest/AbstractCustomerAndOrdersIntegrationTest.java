@@ -5,16 +5,16 @@ import net.chrisrichardson.eventstore.examples.customersandorders.common.order.O
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.CustomerView;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderInfo;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 import static io.eventuate.util.test.async.Eventually.eventually;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public abstract class AbstractCustomerAndOrdersIntegrationTest {
     protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -86,7 +86,6 @@ public abstract class AbstractCustomerAndOrdersIntegrationTest {
 
         try {
             createOrder("unknown-customer-id", orderTotal);
-            fail();
         } catch (IntegrationTestCustomerNotFoundException e) {
             // Expected
         }

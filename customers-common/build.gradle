@@ -1,5 +1,9 @@
+plugins {
+    id 'org.kordamp.gradle.jandex' version '0.6.0'
+}
+
 dependencies {
     compile project(":common")
 
-    testCompile "junit:junit:4.12"
+    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }

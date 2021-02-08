@@ -1,3 +1,7 @@
+plugins {
+    id 'org.kordamp.gradle.jandex' version '0.6.0'
+}
+
 dependencies {
     compile project(":common")
     compile 'io.quarkus:quarkus-mongodb-panache'
