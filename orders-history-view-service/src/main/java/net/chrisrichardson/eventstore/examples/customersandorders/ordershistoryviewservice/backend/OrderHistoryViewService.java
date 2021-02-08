@@ -18,27 +18,21 @@ public class OrderHistoryViewService {
   OrderViewRepository orderViewRepository;
 
   public void createCustomer(String customerId, String customerName, Money creditLimit) {
-    customerViewRepository.persist(new CustomerView(customerId, customerName, creditLimit));
+    customerViewRepository.createCustomer(customerId, customerName, creditLimit);
   }
 
   public void addOrder(String customerId, String orderId, Money orderTotal) {
     customerViewRepository.addOrder(customerId, orderId, orderTotal);
-    orderViewRepository.persist(new OrderView(orderId, orderTotal));
+    orderViewRepository.createOrder(orderId, orderTotal);
   }
 
   public void approveOrder(String customerId, String orderId) {
     customerViewRepository.setOrderState(customerId, orderId, OrderState.APPROVED);
-
-    OrderView orderView = orderViewRepository.findById(orderId);
-    orderView.setState(OrderState.APPROVED);
-    orderViewRepository.persistOrUpdate(orderView);
+    orderViewRepository.setOrderState(orderId, OrderState.APPROVED);
   }
 
   public void rejectOrder(String customerId, String orderId) {
     customerViewRepository.setOrderState(customerId, orderId, OrderState.REJECTED);
-
-    OrderView orderView = orderViewRepository.findById(orderId);
-    orderView.setState(OrderState.REJECTED);
-    orderViewRepository.persistOrUpdate(orderView);
+    orderViewRepository.setOrderState(orderId, OrderState.REJECTED);
   }
 }

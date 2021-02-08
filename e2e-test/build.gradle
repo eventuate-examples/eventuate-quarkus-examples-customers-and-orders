@@ -1,15 +1,22 @@
+plugins {
+    id "io.quarkus" version "${quarkusVersion}"
+    id 'org.kordamp.gradle.jandex' version '0.6.0'
+}
+
 dependencies {
     testCompile project(":common-test")
     testCompile project(":customers-common")
     testCompile project(":orders-common")
 
-    testCompile "junit:junit:4.12"
-    testCompile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testCompile 'io.quarkus:quarkus-junit5'
+
+    testCompile 'io.quarkus:quarkus-rest-client'
+    testCompile 'io.quarkus:quarkus-resteasy-jackson'
 
     implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }
 
 test {
+    useJUnitPlatform()
     ignoreFailures (!project.hasProperty("ignoreE2EFailures") || ignoreE2EFailures.toBoolean())
 }

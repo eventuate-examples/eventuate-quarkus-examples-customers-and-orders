@@ -68,6 +68,7 @@ services:
       context: ./customers-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
+    restart: always
     ports:
       - "8081:8080"
     depends_on:
@@ -86,11 +87,11 @@ services:
       context: ./orders-history-view-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
+    restart: always
     ports:
       - "8082:8080"
     depends_on:
       - mongodb
-      - mysql
       - kafka
       - zookeeper
     environment:
@@ -102,6 +103,7 @@ services:
       context: ./orders-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION}
+    restart: always
     ports:
       - "8083:8080"
     depends_on:
@@ -110,7 +112,6 @@ services:
       - zookeeper
       - customers-service
     environment:
-      CUSTOMER_SERVICE_URL: http://customers-service:8080/customers/{customerId}
       EVENTUATEDATABASE: mysql
       QUARKUS_DATASOURCE_USERNAME: mysqluser
       QUARKUS_DATASOURCE_PASSWORD: mysqlpw

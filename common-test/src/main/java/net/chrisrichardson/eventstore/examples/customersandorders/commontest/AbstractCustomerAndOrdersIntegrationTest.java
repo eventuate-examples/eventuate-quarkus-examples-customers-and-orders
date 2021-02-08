@@ -5,17 +5,16 @@ import net.chrisrichardson.eventstore.examples.customersandorders.common.order.O
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.CustomerView;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderInfo;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordershistorycommon.OrderView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 import static io.eventuate.util.test.async.Eventually.eventually;
-import static io.eventuate.util.test.async.Eventually.eventuallyReturning;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public abstract class AbstractCustomerAndOrdersIntegrationTest {
     protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -33,59 +32,51 @@ public abstract class AbstractCustomerAndOrdersIntegrationTest {
 
         String customerId = createCustomer(creditLimit);
 
-        Thread.sleep(4000);
-
         Money orderTotal = new Money(720);
 
         String orderId = createOrder(customerId, orderTotal);
 
-        eventually(40, 500, TimeUnit.MILLISECONDS, () -> {
+        eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
                 OrderView o = getOrderView(orderId);
                 assertNotNull(o);
                 assertEquals(OrderState.APPROVED, o.getState());
         });
 
-        CustomerView customerView = eventuallyReturning(() -> {
+        eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
           CustomerView cv = getCustomerView(customerId);
           assertNotNull(cv);
           OrderInfo orderInfo = cv.getOrders().get(orderId);
           assertNotNull(orderInfo);
           assertEquals(OrderState.APPROVED, orderInfo.getState());
-          return cv;
+          assertEquals(creditLimit, cv.getCreditLimit());
+          assertEquals(orderTotal, cv.getOrders().get(orderId).getOrderTotal());
         });
-
-        assertEquals(creditLimit, customerView.getCreditLimit());
-        assertEquals(orderTotal, customerView.getOrders().get(orderId).getOrderTotal());
-
     }
 
     @Test
-    public void shouldCreateAndRejectOrder() {
+    public void shouldCreateAndRejectOrder() throws Exception {
 
-        String customerId = createCustomer(creditLimit);
+      String customerId = createCustomer(creditLimit);
 
-        Money orderTotal = creditLimit.add(new Money(1));
+      Money orderTotal = creditLimit.add(new Money(1));
 
-        String orderId = createOrder(customerId, orderTotal);
+      String orderId = createOrder(customerId, orderTotal);
 
-        eventually(40, 500, TimeUnit.MILLISECONDS, () -> {
-          OrderView o = getOrderView(orderId);
-          assertNotNull(o);
-          assertEquals(OrderState.REJECTED, o.getState());
-        });
+      eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
+        OrderView o = getOrderView(orderId);
+        assertNotNull(o);
+        assertEquals(OrderState.REJECTED, o.getState());
+      });
 
-        CustomerView customerView = eventuallyReturning(() -> {
-          CustomerView cv = getCustomerView(customerId);
-          assertNotNull(cv);
-          OrderInfo orderInfo = cv.getOrders().get(orderId);
-          assertNotNull(orderInfo);
-          assertEquals(OrderState.REJECTED, orderInfo.getState());
-          return cv;
-        });
-
-        assertEquals(creditLimit, customerView.getCreditLimit());
-        assertEquals(orderTotal, customerView.getOrders().get(orderId).getOrderTotal());
-
+      eventually(120, 500, TimeUnit.MILLISECONDS, () -> {
+        CustomerView cv = getCustomerView(customerId);
+        assertNotNull(cv);
+        OrderInfo orderInfo = cv.getOrders().get(orderId);
+        assertNotNull(orderInfo);
+        assertEquals(OrderState.REJECTED, orderInfo.getState());
+        assertEquals(creditLimit, cv.getCreditLimit());
+        assertEquals(orderTotal, cv.getOrders().get(orderId).getOrderTotal());
+      });
     }
 
     @Test
@@ -95,7 +86,6 @@ public abstract class AbstractCustomerAndOrdersIntegrationTest {
 
         try {
             createOrder("unknown-customer-id", orderTotal);
-            fail();
         } catch (IntegrationTestCustomerNotFoundException e) {
             // Expected
         }

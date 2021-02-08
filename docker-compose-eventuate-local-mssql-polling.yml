@@ -24,96 +24,93 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: -Xmx192m
 
-  postgres:
-    image: eventuateio/eventuate-postgres:$EVENTUATE_COMMON_VERSION
+  mssql:
+    image: eventuateio/eventuate-mssql:$EVENTUATE_COMMON_VERSION
     ports:
-      - 5432:5432
+      - 1433:1433
     environment:
-      POSTGRES_USER: eventuate
-      POSTGRES_PASSWORD: eventuate
+      SA_PASSWORD: Eventuate123!
+      ACCEPT_EULA: Y
 
-
-  cdcservice:
+  cdc-service:
     image: eventuateio/eventuate-cdc-service:$EVENTUATE_CDC_VERSION
     ports:
       - "8099:8080"
     depends_on:
-      - postgres
+      - mssql
       - kafka
       - zookeeper
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
-      SPRING_DATASOURCE_USERNAME: eventuate
-      SPRING_DATASOURCE_PASSWORD: eventuate
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql:1433;databaseName=eventuate
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: Eventuate123!
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
       SPRING_PROFILES_ACTIVE: EventuatePolling
-      EVENTUATELOCAL_CDC_READER_NAME: PostgresPollingReader
+      EVENTUATELOCAL_CDC_READER_NAME: MsSqlPollingReader
       EVENTUATE_CDC_TYPE: "EventuateLocal"
       EVENTUATE_OUTBOX_ID: 1
       JAVA_OPTS: -Xmx64m
 
   mongodb:
-    image: mongo:3.0.4
+    image: mongo:4.2.12
     hostname: mongodb
-    command: mongod --smallfiles
     ports:
       - "27017:27017"
 
-  customercommandside:
+  customers-service:
     build:
       context: ./customers-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
+    restart: always
     ports:
       - "8081:8080"
     depends_on:
-      - postgres
+      - mssql
       - kafka
       - zookeeper
     environment:
-      DB_URL: jdbc:postgresql://postgres/eventuate
-      DB_USERNAME: eventuate
-      DB_PASSWORD: eventuate
-      DB_DRIVERCLASSNAME: org.postgresql.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SPRING_PROFILES_ACTIVE: EventuatePolling
-      EVENTUATELOCAL_CDC_READER_NAME: PostgresPollingReader
+      EVENTUATEDATABASE: mssql
+      QUARKUS_DATASOURCE_USERNAME: sa
+      QUARKUS_DATASOURCE_PASSWORD: Eventuate123!
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:sqlserver://mssql:1433;databaseName=eventuate
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
-  orderhistoryqueryside:
+  orders-history-view-service:
     build:
       context: ./orders-history-view-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
+    restart: always
     ports:
       - "8082:8080"
     depends_on:
       - mongodb
-      - postgres
       - kafka
       - zookeeper
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb/customers_and_orders
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      QUARKUS_MONGODB_CONNECTION_STRING: mongodb://mongodb:27017/customers_and_orders
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
-  ordercommandside:
+  orders-service:
     build:
       context: ./orders-service/
       args:
         baseImageVersion: ${EVENTUATE_JAVA_BASE_IMAGE_VERSION?}
+    restart: always
     ports:
       - "8083:8080"
     depends_on:
-      - postgres
+      - mssql
       - kafka
       - zookeeper
-      - customercommandside
+      - customers-service
     environment:
-      CUSTOMER_SERVICE_URL: http://customercommandside:8080/customers/{customerId}
-      ENDPOINTS_SENSITIVE: "false"
-      DB_URL: jdbc:postgresql://postgres/eventuate
-      DB_USERNAME: eventuate
-      DB_PASSWORD: eventuate
-      DB_DRIVERCLASSNAME: org.postgresql.Driver
-      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATEDATABASE: mssql
+      QUARKUS_DATASOURCE_USERNAME: sa
+      QUARKUS_DATASOURCE_PASSWORD: Eventuate123!
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:sqlserver://mssql:1433;databaseName=eventuate
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      CUSTOMER_API_MP_REST_URL: http://customers-service:8080
