@@ -18,8 +18,6 @@ dockerCompose {
         useComposeFiles = ['docker-compose-integration-tests-eventuate-local-postgres-wal.yml']
     else
         useComposeFiles = ['docker-compose-integration-tests-eventuate-local-mysql.yml']
-
-    captureContainersOutput = true
 }
 
 dependencies {
