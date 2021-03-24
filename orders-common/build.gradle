@@ -4,6 +4,4 @@ plugins {
 
 dependencies {
     compile project(":common")
-
-    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }

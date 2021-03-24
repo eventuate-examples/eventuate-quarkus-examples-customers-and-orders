@@ -30,8 +30,6 @@ dependencies {
     testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
     testCompile 'io.quarkus:quarkus-junit5'
     testCompile 'org.mockito:mockito-all:1.10.19'
-
-    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }
 
 test {

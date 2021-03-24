@@ -29,8 +29,6 @@ dependencies {
     compile 'io.quarkus:quarkus-resteasy-jackson'
 
     testCompile 'io.quarkus:quarkus-junit5'
-
-    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }
 
 test {

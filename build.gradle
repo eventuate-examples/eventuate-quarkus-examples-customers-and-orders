@@ -23,6 +23,10 @@ subprojects {
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
         mavenLocal()
     }
+
+    dependencies {
+        implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
+    }
 }
 
 dockerCompose {
