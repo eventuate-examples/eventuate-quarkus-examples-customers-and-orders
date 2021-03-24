@@ -5,7 +5,7 @@ plugins {
 dependencies {
     compile 'commons-lang:commons-lang:2.6'
 
-    compile "io.eventuate.local.java:eventuate-client-java:$eventuateLocalVersion"
+    compile "io.eventuate.local.java:eventuate-client-java"
 
     compile "io.eventuate.common:eventuate-common-id:$eventuateCommonVersion"
 
@@ -13,5 +13,5 @@ dependencies {
     testCompile 'com.pholser:junit-quickcheck-core:0.7'
     testCompile 'com.pholser:junit-quickcheck-generators:0.7'
     testCompile "junit:junit:4.12"
-    testCompile "io.eventuate.local.java:eventuate-client-java-jdbc:$eventuateLocalVersion"
+    testCompile "io.eventuate.local.java:eventuate-client-java-jdbc"
 }

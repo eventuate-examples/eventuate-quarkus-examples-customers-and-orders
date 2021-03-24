@@ -23,8 +23,8 @@ dockerCompose {
 dependencies {
     compile project(":orders-common")
 
-    compile "io.eventuate.local.java:eventuate-client-java-quarkus:$eventuateLocalQuarkusVersion"
-    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.local.java:eventuate-client-java-quarkus"
+    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc"
     compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
 
     compile 'io.quarkus:quarkus-core'
@@ -44,7 +44,7 @@ dependencies {
     compile project(":customers-common")
 
     testCompile 'org.mockito:mockito-all:1.10.19'
-    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc"
     testCompile 'io.quarkus:quarkus-junit5'
 }
 

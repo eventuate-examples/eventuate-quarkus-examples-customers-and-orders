@@ -8,8 +8,8 @@ plugins {
 dependencies {
     compile project(":customers-common")
 
-    compile "io.eventuate.local.java:eventuate-client-java-quarkus:$eventuateLocalQuarkusVersion"
-    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.local.java:eventuate-client-java-quarkus"
+    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc"
     compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
 
     compile 'io.quarkus:quarkus-core'
@@ -27,7 +27,7 @@ dependencies {
     testCompile 'com.pholser:junit-quickcheck-generators:0.7'
     testCompile 'com.jayway.restassured:rest-assured:2.9.0'
 
-    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc:$eventuateLocalQuarkusVersion"
+    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc"
     testCompile 'io.quarkus:quarkus-junit5'
     testCompile 'org.mockito:mockito-all:1.10.19'
 }
