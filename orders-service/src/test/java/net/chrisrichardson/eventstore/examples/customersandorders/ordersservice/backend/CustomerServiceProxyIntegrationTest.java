@@ -1,6 +1,8 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend;
 
+import io.eventuate.common.quarkus.jdbc.test.configuration.EmbeddedDatabaseProfile;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import net.chrisrichardson.eventstore.examples.customersandorders.customerscommon.CreateCustomerRequest;
 import net.chrisrichardson.eventstore.examples.customersandorders.customerscommon.CreateCustomerResponse;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 
 @QuarkusTest
+@TestProfile(EmbeddedDatabaseProfile.class)
 public class CustomerServiceProxyIntegrationTest {
 
   @Inject

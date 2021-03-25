@@ -43,6 +43,8 @@ dependencies {
 
     compile project(":customers-common")
 
+    testCompile "io.eventuate.common:eventuate-common-quarkus-jdbc-test-configuration:$eventuateCommonQuarkusVersion"
+
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc"
     testCompile 'io.quarkus:quarkus-junit5'

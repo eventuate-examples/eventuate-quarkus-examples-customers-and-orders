@@ -19,12 +19,12 @@ public class CustomerTest {
   private Customer customer;
   private List<Event> events;
 
-//  @BeforeEach
+  @BeforeEach
   public void createEmptyCustomer() {
     customer = new Customer();
   }
 
-//  @Test
+  @Test
   public void testCreate() {
 
     process(new CreateCustomerCommand(CustomerMother.name, CustomerMother.creditLimit));
@@ -42,7 +42,7 @@ public class CustomerTest {
   }
 
 
-//  @Test
+  @Test
   public void testReserveCredit() {
     initializeCustomer();
 
@@ -58,7 +58,7 @@ public class CustomerTest {
   }
 
 
-//  @Test
+  @Test
   public void testCreditLimitExceeded() {
     initializeCustomer();
 

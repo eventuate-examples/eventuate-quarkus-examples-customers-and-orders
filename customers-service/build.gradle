@@ -23,6 +23,8 @@ dependencies {
     compile 'io.quarkus:quarkus-jdbc-mssql'
     compile 'io.quarkus:quarkus-jdbc-postgresql'
 
+    testCompile "io.eventuate.common:eventuate-common-quarkus-jdbc-test-configuration:$eventuateCommonQuarkusVersion"
+
     testCompile 'com.pholser:junit-quickcheck-core:0.7'
     testCompile 'com.pholser:junit-quickcheck-generators:0.7'
     testCompile 'com.jayway.restassured:rest-assured:2.9.0'
