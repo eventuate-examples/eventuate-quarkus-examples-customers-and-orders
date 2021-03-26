@@ -1,7 +1,9 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.customersservice.backend;
 
 import com.jayway.restassured.RestAssured;
+import io.eventuate.common.quarkus.jdbc.test.configuration.EmbeddedDatabaseProfile;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import net.chrisrichardson.eventstore.examples.customersandorders.customerscommon.CreateCustomerRequest;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -10,6 +12,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 @QuarkusTest
+@TestProfile(EmbeddedDatabaseProfile.class)
 public class CustomerServiceInProcessComponentTest {
 
   @ConfigProperty(name = "quarkus.http.test-port")

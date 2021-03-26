@@ -1,14 +1,17 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.customersservice.backend;
 
 import io.eventuate.EntityWithIdAndVersion;
+import io.eventuate.common.quarkus.jdbc.test.configuration.EmbeddedDatabaseProfile;
 import io.eventuate.sync.AggregateRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
 @QuarkusTest
+@TestProfile(EmbeddedDatabaseProfile.class)
 public class CustomerPersistenceTest {
 
   @Inject

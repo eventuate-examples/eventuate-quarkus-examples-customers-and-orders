@@ -15,8 +15,8 @@ dependencies {
     compile project(":orders-history-common")
     compile project(":customers-common")
 
-    compile "io.eventuate.local.java:eventuate-client-java-quarkus-events:$eventuateLocalQuarkusVersion"
-    compile "io.eventuate.local.java:eventuate-local-java-quarkus-events:$eventuateLocalQuarkusVersion"
+    compile "io.eventuate.local.java:eventuate-client-java-quarkus-events"
+    compile "io.eventuate.local.java:eventuate-local-java-quarkus-events"
 
     compile "io.quarkus:quarkus-mongodb-client"
     compile 'io.quarkus:quarkus-mongodb-panache'
@@ -29,8 +29,6 @@ dependencies {
     compile 'io.quarkus:quarkus-resteasy-jackson'
 
     testCompile 'io.quarkus:quarkus-junit5'
-
-    implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
 }
 
 test {
