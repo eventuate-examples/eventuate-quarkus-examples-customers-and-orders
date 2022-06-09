@@ -17,12 +17,14 @@ dockerCompose {
 
     projectName = null
 
+    startedServices = ["customers-service"] 
+
     if ("mssql".equals(System.getenv("EVENTUATEDATABASE")))
-        useComposeFiles = ['../docker-compose-integration-tests-eventuate-local-mssql-polling.yml']
+        useComposeFiles = ['../docker-compose-eventuate-local-mssql-polling.yml']
     else if ("postgresql".equals(System.getenv("EVENTUATEDATABASE")))
-        useComposeFiles = ['../docker-compose-integration-tests-eventuate-local-postgres-wal.yml']
+        useComposeFiles = ['../docker-compose-eventuate-local-postgres-wal.yml']
     else
-        useComposeFiles = ['../docker-compose-integration-tests-eventuate-local-mysql.yml']
+        useComposeFiles = ['../docker-compose-eventuate-local-mysql.yml']
 }
 
 dependencies {
