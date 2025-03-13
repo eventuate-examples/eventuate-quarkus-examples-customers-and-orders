@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath "com.avast.gradle:gradle-docker-compose-plugin:$dockerComposePluginVersion"
@@ -11,18 +10,18 @@ buildscript {
 apply plugin: 'docker-compose'
 
 subprojects {
-    apply plugin: 'java'
+    apply plugin: 'java-library'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
-        jcenter()
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
     }
 
     dependencies {
-        implementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
+        implementation platform("io.quarkus:quarkus-bom:${quarkusVersion}")
+          testImplementation enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}")
         implementation(platform("io.eventuate.platform:eventuate-platform-dependencies:$eventuatePlatformVersion"))
     }
 }

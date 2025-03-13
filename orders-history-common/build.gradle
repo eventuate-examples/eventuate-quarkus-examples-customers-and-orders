@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    compile project(":common")
-    compile 'io.quarkus:quarkus-mongodb-panache'
+    api project(":common")
+    api 'io.quarkus:quarkus-mongodb-panache'
 }

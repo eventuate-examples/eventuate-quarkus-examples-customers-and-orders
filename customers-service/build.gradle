@@ -6,32 +6,32 @@ plugins {
 }
 
 dependencies {
-    compile project(":customers-common")
+    api project(":customers-common")
 
-    compile "io.eventuate.local.java:eventuate-client-java-quarkus"
-    compile "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc"
-    compile "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
+    api "io.eventuate.local.java:eventuate-client-java-quarkus"
+    api "io.eventuate.local.java:eventuate-local-java-quarkus-jdbc"
+    api "io.eventuate.common:eventuate-common-quarkus-jdbc:$eventuateCommonQuarkusVersion"
 
-    compile 'io.quarkus:quarkus-core'
-    compile 'io.quarkus.arc:arc'
-    compile 'io.quarkus:quarkus-arc-deployment'
-    compile 'io.quarkus:quarkus-smallrye-health'
-    compile 'io.quarkus:quarkus-smallrye-openapi'
-    compile 'io.quarkus:quarkus-resteasy-jackson'
+    api 'io.quarkus:quarkus-core'
+    api 'io.quarkus.arc:arc'
+    api 'io.quarkus:quarkus-arc-deployment'
+    api 'io.quarkus:quarkus-smallrye-health'
+    api 'io.quarkus:quarkus-smallrye-openapi'
+    api 'io.quarkus:quarkus-resteasy-jackson'
 
-    compile 'io.quarkus:quarkus-jdbc-mysql'
-    compile 'io.quarkus:quarkus-jdbc-mssql'
-    compile 'io.quarkus:quarkus-jdbc-postgresql'
+    api 'io.quarkus:quarkus-jdbc-mysql'
+    api 'io.quarkus:quarkus-jdbc-mssql'
+    api 'io.quarkus:quarkus-jdbc-postgresql'
 
-    testCompile "io.eventuate.common:eventuate-common-quarkus-jdbc-test-configuration:$eventuateCommonQuarkusVersion"
+    testImplementation "io.eventuate.common:eventuate-common-quarkus-jdbc-test-configuration:$eventuateCommonQuarkusVersion"
 
-    testCompile 'com.pholser:junit-quickcheck-core:0.7'
-    testCompile 'com.pholser:junit-quickcheck-generators:0.7'
-    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
+    testImplementation 'com.pholser:junit-quickcheck-core:0.7'
+    testImplementation 'com.pholser:junit-quickcheck-generators:0.7'
+    testImplementation 'com.jayway.restassured:rest-assured:2.9.0'
 
-    testCompile "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc"
-    testCompile 'io.quarkus:quarkus-junit5'
-    testCompile 'org.mockito:mockito-all:1.10.19'
+    testImplementation "io.eventuate.local.java:eventuate-client-java-quarkus-jdbc"
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
 }
 
 test {

@@ -12,23 +12,23 @@ dockerCompose {
 }
 
 dependencies {
-    compile project(":orders-history-common")
-    compile project(":customers-common")
+    api project(":orders-history-common")
+    api project(":customers-common")
 
-    compile "io.eventuate.local.java:eventuate-client-java-quarkus-events"
-    compile "io.eventuate.local.java:eventuate-local-java-quarkus-events"
+    api "io.eventuate.local.java:eventuate-client-java-quarkus-events"
+    api "io.eventuate.local.java:eventuate-local-java-quarkus-events"
 
-    compile "io.quarkus:quarkus-mongodb-client"
-    compile 'io.quarkus:quarkus-mongodb-panache'
+    api "io.quarkus:quarkus-mongodb-client"
+    api 'io.quarkus:quarkus-mongodb-panache'
 
-    compile 'io.quarkus:quarkus-core'
-    compile 'io.quarkus.arc:arc'
-    compile 'io.quarkus:quarkus-arc-deployment'
-    compile 'io.quarkus:quarkus-smallrye-health'
-    compile 'io.quarkus:quarkus-smallrye-openapi'
-    compile 'io.quarkus:quarkus-resteasy-jackson'
+    api 'io.quarkus:quarkus-core'
+    api 'io.quarkus.arc:arc'
+    api 'io.quarkus:quarkus-arc-deployment'
+    api 'io.quarkus:quarkus-smallrye-health'
+    api 'io.quarkus:quarkus-smallrye-openapi'
+    api 'io.quarkus:quarkus-resteasy-jackson'
 
-    testCompile 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.quarkus:quarkus-junit5'
 }
 
 test {

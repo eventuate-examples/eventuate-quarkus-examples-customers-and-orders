@@ -4,14 +4,14 @@ plugins {
 }
 
 dependencies {
-    testCompile project(":common-test")
-    testCompile project(":customers-common")
-    testCompile project(":orders-common")
+    testImplementation project(":common-test")
+    testImplementation project(":customers-common")
+    testImplementation project(":orders-common")
 
-    testCompile 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.quarkus:quarkus-junit5'
 
-    testCompile 'io.quarkus:quarkus-rest-client'
-    testCompile 'io.quarkus:quarkus-resteasy-jackson'
+    testImplementation 'io.quarkus:quarkus-rest-client'
+    testImplementation 'io.quarkus:quarkus-resteasy-jackson'
 }
 
 test {

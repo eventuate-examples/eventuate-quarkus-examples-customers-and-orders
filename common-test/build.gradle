@@ -3,11 +3,11 @@ plugins {
 }
 
 dependencies {
-    compile project(":common")
-    compile project(":orders-history-common")
+    api project(":common")
+    api project(":orders-history-common")
 
-    compile "io.reactivex:rxjava:1.1.5"
-    compile 'io.quarkus:quarkus-junit5'
+    api "io.reactivex:rxjava:1.1.5"
+    api 'io.quarkus:quarkus-junit5'
 
-    compile 'io.eventuate.util:eventuate-util-test:0.1.0.RELEASE'
+    api 'io.eventuate.util:eventuate-util-test:0.1.0.RELEASE'
 }

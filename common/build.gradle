@@ -3,15 +3,15 @@ plugins {
 }
 
 dependencies {
-    compile 'commons-lang:commons-lang:2.6'
+    api 'commons-lang:commons-lang:2.6'
 
-    compile "io.eventuate.local.java:eventuate-client-java"
+    api "io.eventuate.local.java:eventuate-client-java"
 
-    compile "io.eventuate.common:eventuate-common-id:$eventuateCommonVersion"
+    api "io.eventuate.common:eventuate-common-id:$eventuateCommonVersion"
 
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile 'com.pholser:junit-quickcheck-core:0.7'
-    testCompile 'com.pholser:junit-quickcheck-generators:0.7'
-    testCompile "junit:junit:4.12"
-    testCompile "io.eventuate.local.java:eventuate-client-java-jdbc"
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation 'com.pholser:junit-quickcheck-core:0.7'
+    testImplementation 'com.pholser:junit-quickcheck-generators:0.7'
+    testImplementation "junit:junit:4.12"
+    testImplementation "io.eventuate.local.java:eventuate-client-java-jdbc"
 }
